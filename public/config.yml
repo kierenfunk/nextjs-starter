@@ -1,0 +1,95 @@
+backend:
+   name: test-repo
+ # name: git-gateway
+ # repo: "kierenfunk/craig-blaess"
+ # branch: master
+media_folder: public/images
+public_folder: images
+collections:
+  - name: "tours"
+    label: "Tour"
+    folder: "src/markdown/tours"
+    preview_path: tour/{{slug}}
+    create: true
+    editor:
+      preview: false
+    fields:
+      - {label: "Tour Name", name: "title", widget: "string"}
+      - {label: "Subtitle", name: "subtitle", widget: "string"}
+      - {label: "Order", name: "order", widget: "number"}
+      - {label: "Tour Distance", name: "distance", widget: "number", comment: 'please enter only numbers'}
+      - {label: "Featured Image", name: "image_main", widget: "image"}
+      - {label: "Home Page Snippet", name: "snippet", widget: "markdown"}
+      - {label: "Description", name: "tour_description", widget: "markdown"}
+      - label: 'Dates'
+        name: 'dates'
+        widget: list
+        summary: 'Tour: {{field.start_date}} to {{field.end_date}}'
+        fields:
+          - { label: "Start Date", name: "start_date", format: "YYYY-MM-DD", dateFormat: "DD/MM/YYYY", widget: "date"}
+          - { label: "End Date", name: "end_date", format: "YYYY-MM-DD", dateFormat: "DD/MM/YYYY", widget: "date"}
+      - label: 'Trip Schedule'
+        name: 'days'
+        widget: list
+        summary: '{{fields.name}}'
+        fields:
+          - {label: "Day Name", name: "name", widget: "string"}
+          - {label: "Description", name: "description", widget: "markdown"}
+      - label: 'Gallery'
+        name: 'gallery'
+        widget: list
+        fields:
+          - {label: "Picture", name: "img", widget: "image"}
+      - label: 'Family Price'
+        name: 'family_rate'
+        widget: object
+        comment: 'please enter only numbers'
+        fields:
+          - {label: 'Dollars', name: 'dollars', widget: "number"}
+          - {label: 'Cents', name: 'cents', widget: "number"}
+      - label: 'Standard Price'
+        name: 'standard_rate'
+        widget: object
+        comment: 'please enter only numbers'
+        fields:
+          - {label: 'Dollars', name: 'dollars', widget: "number"}
+          - {label: 'Cents', name: 'cents', widget: "number"}
+      - label: 'Additional Adult Price'
+        name: 'additional_adult'
+        widget: object
+        comment: 'please enter only numbers'
+        fields:
+          - {label: 'Dollars', name: 'dollars', widget: "number"}
+          - {label: 'Cents', name: 'cents', widget: "number"}
+      - label: 'Additional Child Price'
+        name: 'additional_child'
+        widget: object
+        comment: 'please enter only numbers'
+        fields:
+          - {label: 'Dollars', name: 'dollars', widget: "number"}
+          - {label: 'Cents', name: 'cents', widget: "number"}
+  - name: "pages"
+    label: "Pages"
+    create: false
+    editor:
+      preview: false
+    files:
+      - label: "Home Page"
+        name: "home"
+        file: "src/markdown/home.md"
+        fields:
+          - {label: Title, name: title, widget: string}
+          - {label: Subtitle, name: subtitle, widget: markdown}
+          - {label: "About Section", name: about, widget: markdown}
+      - label: "About Page"
+        name: "about"
+        file: "src/markdown/about.md"
+        fields:
+          - {label: Title, name: title, widget: string}
+          - {label: "About Title", name: aboutTitle, widget: string}
+          - {label: "About Section", name: about, widget: markdown}
+      - label: "Inclusions, Terms & Conditions"
+        name: "terms"
+        file: "src/markdown/terms.md"
+        fields:
+          - {label: "Inclusions, Terms & Conditions", name: text, widget: markdown}
