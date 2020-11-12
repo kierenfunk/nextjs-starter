@@ -1,5 +1,7 @@
 to begin:
 ```
-npx create-next-app site-name --example "https://github.com/kierenfunk/nextjs-starter"
+git clone "https://github.com/kierenfunk/nextjs-starter" my-site
+cd my-site
+npm install
 netlify init
 ```
