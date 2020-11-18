@@ -3,7 +3,7 @@ import Head from 'next/head';
 import { StyleSheetManager } from 'styled-components';
 import Main from '../layouts/Main';
 
-const StyleInjection = ({data}) => {
+const StyleInjection = ({children}) => {
 	const [frame,setFrame] = useState('');
 	useEffect(()=>{
 		const iframe = document.querySelector('#nc-root iframe');
@@ -12,7 +12,7 @@ const StyleInjection = ({data}) => {
 	
 	return (
 		<StyleSheetManager target={frame}>
-				<Main data={data}/>
+			{children}
 		</StyleSheetManager>
 	)
 }
@@ -23,7 +23,9 @@ export default function Admin() {
 			const CMS = (await import('netlify-cms-app')).default;
 			CMS.init();
 			CMS.registerPreviewTemplate('general', ({ entry }) => (
-				<StyleInjection data={entry.toJS().data}/>
+				<StyleInjection>
+					<Main data={entry.toJS().data}/>
+				</StyleInjection>
 			))
 			CMS.registerPreviewStyle("normalize.css");
 		})();
