@@ -2,25 +2,23 @@ import matter from 'gray-matter'
 import fs from 'fs'
 import path from 'path'
 
-const propRetrieval = async (targetFile=null) => {
-	// const directory = path.join(process.cwd(), 'src/markdown/tours')
-	// const filenames = fs.readdirSync(directory)
+const propRetrieval = async (page=null,collections=[]) => {
+	collections = await collections.reduce( async (obj,pathName)=>{
+		const fileNames = fs.readdirSync(path.join(process.cwd(), `src/markdown/${pathName}`))
+		obj[pathName] = await Promise.all(fileNames.map(async (file) =>{
+			const content = await import(`../markdown/${pathName}/${file}`)
+			return matter(content.default).data
+		}))
+		return obj
+	},{})
 
-	/* const tours = []
-	await filenames.map(async (file) =>{
-		const content = await import(`../markdown/tours/${file}`)
-		tours.push(matter(content.default).data)
-	}) */
-
-	const collections = []
-
-	if (targetFile === null){
+	if (page === null){
 		return {collections}
 	}
 
-	const mainPage = await import(`../markdown/${targetFile}`)
-	const {data, body} = matter(mainPage.default)
-	return {data, body, collections}
+	const pageTarget = await import(`../markdown/${page}`)
+	const {data} = matter(pageTarget.default)
+	return {data, collections}
 }
 
 export default propRetrieval
